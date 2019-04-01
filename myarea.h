@@ -22,7 +22,7 @@ public:
 protected:
   //Override default signal handler:
   bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
-  //void MyArea::on_drawingarea_draw(const Cairo::RefPtr<Cairo::Context>& cr,  int, int);
+  
   // Override mouse events
   bool on_button_press_event(GdkEventButton * event);
 
@@ -40,7 +40,6 @@ private:
   int y1;
   int x2;
   int y2;
-  int c; 
 };
 
 #endif // GTKMM_EXAMPLE_MYAREA_H

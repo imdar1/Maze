@@ -24,15 +24,13 @@ void readInput(){
 	string nama;
 	int i;
 	
-	//cin >> nama;
 	ifstream inFile;
 	inFile.open(m_Entry->get_text());
-	// File not found
 	if (!inFile) {
     	cerr << "Gagal membuka "+nama;
     	//exit(1);   // call system to stop
 	} 
-	//Baca file line by line
+	
 	i = 0;
 	string line;
 	for(line; getline( inFile, line ); )
@@ -44,7 +42,6 @@ void readInput(){
 	}
 	kol = line.length();
 	brs = i;
-	//cout<<"berhasil"<<endl;
 }
 
 
@@ -55,13 +52,6 @@ void init(bool visit[N][N]){
 			visit[i][j]=false;
 		}	
 	}
-}
-
-int Delay(int ms)
-{
-    clock_t starting = clock();
-    while( clock() - starting < ms ) {}
-    return 0;
 }
 
 void pushSort(pair <int,int> x,float bobot[N][N],deque < pair <int,int> >* simpul){
@@ -113,8 +103,7 @@ void BFS(char arr[N][N], int posX, int posY, int hslX, int hslY) {
 			if(!visit[nextnode.ff][nextnode.ss]&&arr[nextnode.ff][nextnode.ss]=='0'){
 				path[nextnode.ff][nextnode.ss].assign(path[node.ff][node.ss].begin(), path[node.ff][node.ss].end());
 				visit[nextnode.ff][nextnode.ss] = true;
-				//arr[nextnode.ff][nextnode.ss] = 'X'; 
-            area->setArr('X',nextnode.ff,nextnode.ss);                
+				area->setArr('X',nextnode.ff,nextnode.ss); 
 				simpul.push_back(nextnode);
 			}
 		}
@@ -157,7 +146,7 @@ void AStar(char arr[N][N], int posX, int posY, int hslX, int hslY) {
 				jarak[nextnode.ff][nextnode.ss] = jarak[node.ff][node.ss] + 1;
 				bobot[nextnode.ff][nextnode.ss] = jarak[nextnode.ff][nextnode.ss] + jarakAkhir(node.ff,hslX,node.ss,hslY);
 				//arr[nextnode.ff][nextnode.ss] = 'X'; 
-            area->setArr('X',nextnode.ff,nextnode.ss);  
+				area->setArr('X',nextnode.ff,nextnode.ss);  
 				pushSort(nextnode,bobot,&simpul);
 			}
 		}
@@ -167,9 +156,9 @@ void AStar(char arr[N][N], int posX, int posY, int hslX, int hslY) {
 	
 	for(int i=0;i<path[hslX][hslY].size();i++){
 		//arr[path[hslX][hslY][i].ff][path[hslX][hslY][i].ss] = ' ';
-      area->setArr(' ',path[hslX][hslY][i].ff,path[hslX][hslY][i].ss);      
+      area->setArr(' ',path[hslX][hslY][i].ff,path[hslX][hslY][i].ss);  
+
       //Delay(200); 
-		//cout<<path[xAk][yAk][i].ff<<" "<<path[xAk][yAk][i].ss<<endl;
 	} 
 }
 
@@ -269,8 +258,7 @@ int main(int argc, char** argv)
    m_VPaned.pack1(m_VBox,false,false);
    m_VPaned.pack2(mazeframe,true,false);
 
-   area = new MyArea;
-   
+   area = new MyArea;   
    
    mazeframe.add(*area);
    area->set_hexpand(true);
@@ -278,8 +266,7 @@ int main(int argc, char** argv)
    area->set_vexpand(true);
    area->set_valign(Gtk::ALIGN_FILL);     
    
-
-   //m_button1.signal_clicked().connect( sigc::bind<Glib::ustring>( sigc::mem_fun(*this, &HelloWorld::on_button_clicked), "button 1") );
+   
    btnload->signal_clicked().connect(sigc::ptr_fun(btnloadClicked));
 
    btnBFS->signal_clicked().connect(sigc::ptr_fun(btnBFSClicked));
@@ -288,10 +275,6 @@ int main(int argc, char** argv)
 
    btnReset->signal_clicked().connect(sigc::ptr_fun(btnResetClicked));
 
-      /*
-   while( Gtk::Main::events_pending() )
-         Gtk::Main::iteration(); */
-         
 
    win.show_all_children();  
    return app->run(win);

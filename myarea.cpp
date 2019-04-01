@@ -1,9 +1,7 @@
 #include "myarea.h"
 #include <cairomm/context.h>
-#include <bits/stdc++.h>
 
-using namespace std;
-
+//ctor
 MyArea::MyArea()
 {
   arr =new char*[N];  for (int i = 0; i<N;i++){
@@ -12,11 +10,10 @@ MyArea::MyArea()
   firstclick = false;
   secondclick = false;
   add_events(Gdk::BUTTON_PRESS_MASK);
-  //maze.signal_size_allocate().connect(
-      //sigc::mem_fun(*this, &MyArea::on_drawingarea_allocate));
 
 }
 
+//dtor
 MyArea::~MyArea()
 {
   for (int i = 0; i<N;i++){
@@ -25,6 +22,7 @@ MyArea::~MyArea()
   delete [] arr;
 }
 
+//copyArr
 void MyArea::setArr(char a[N][N], int brs, int kol){
   this->brs = brs;
   this->kol = kol;
@@ -36,9 +34,10 @@ void MyArea::setArr(char a[N][N], int brs, int kol){
   queue_draw();
 }
 
+//setarr berdasasrkan i & j
 void MyArea::setArr(char a,int i,int j){
   arr[i][j] = a;
-  queue_draw();
+  //queue_draw(); //update gambar
 }
 
 void MyArea::getXY(int x,int y,int* hx,int* hy){
@@ -86,7 +85,6 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
       }
 
     }    
-    cout<<"c: "<<c<<endl;
     return true;
   
 } 
@@ -108,7 +106,6 @@ bool MyArea::on_button_press_event(GdkEventButton * event){
               arr[j][i] = 'X'; //TITIK AWAL
               x1=j; //perbaiki baris
               y1=i; //perbaiki kolom 
-              cout<<"clickedone "<<i<<' '<<j<<endl;
               queue_draw();
             }
         }
@@ -125,7 +122,6 @@ bool MyArea::on_button_press_event(GdkEventButton * event){
               secondclick=true;
               x2=j; //perbaiki baris
               y2=i; // perbaiki kolom 
-              cout<<"clickedtwo"<<i<<' '<<j<<endl;
               //refresh the screen
               queue_draw();
             }
